@@ -1,0 +1,4 @@
+trong quá trình phát triển website có tổng cộng 3 môi trường:
+-dev: lập trình viên đi code
+-test: code của dev sẽ được đưa lên server của công ty ->tester tìm kiếm bug
+-production: đưa lên server để người dùng truy cập
