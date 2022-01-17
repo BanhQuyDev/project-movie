@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { authRouter } = require("./auth.router");
 const { cinemasRouter } = require("./cinemas.router");
+const { cineplexRouter } = require("./cineplexs.router");
 const { moviesRouter } = require("./movies.router");
 const { newsRouter } = require("./news.router");
 const { seatsRouter } = require("./seats.router");
@@ -13,6 +14,8 @@ rootRouter.use("/users", userRouter);
 rootRouter.use("/auth", authRouter);
 //http://localhost:7000/api/v1/cinemas
 rootRouter.use("/cinemas", cinemasRouter);
+//http://localhost:7000/api/v1/cineplexs
+rootRouter.use("/cineplexs",cineplexRouter)
 //http://localhost:7000/api/v1/movies
 rootRouter.use("/movies", moviesRouter);
 //http://localhost:7000/api/v1/news
