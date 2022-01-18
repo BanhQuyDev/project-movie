@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const autheticate = (req, res, next) => {
+const authenticate = (req, res, next) => {
   const token = req.header("token");
   try {
     const serectKey = "huyDoan";
@@ -28,6 +28,6 @@ const authorzie = (arrayRole) => (req, res, next) => {
   }
 };
 module.exports = {
-  autheticate,
+  authenticate: authenticate,
   authorzie,
 };

@@ -6,21 +6,19 @@ const {
   sequelize,
 } = require("../models");
 const { QueryTypes } = require("sequelize");
-const getListShowTimesMovies = async (req, res) => {
+const getListShowTimesFollowMovieAndCinema = async (req, res) => {
   try {
-    const { nameMovie, nameCinema, startTime } = req.body;
+    const { nameMovie, nameCinema } = req.body;
     const querySql = `
-    select movies.name as movie ,cinemas.name as cinema, showtimes.startTime 
+    select showtimes.startTime 
     from showtimes,cinemas,cinemamovies,movies
     where showtimes.cinemaId = cinemas.id AND cinemas.id = cinemamovies.cinemaId 
     AND cinemamovies.movieId = movies.id AND movies.name like :nameMovie 
-    AND cinemas.name like :nameCinema AND showtimes.startTime = :startTime
-        `;
+    AND cinemas.name like :nameCinema `;
     const result = await sequelize.query(querySql, {
       replacements: {
         nameMovie: nameMovie,
         nameCinema: nameCinema,
-        startTime: startTime,
       },
       type: QueryTypes.SELECT,
     });
@@ -72,23 +70,23 @@ const updateShowTime = async (req, res) => {
 };
 const deleteShowtime = async (req, res) => {
   try {
-      const {id} = req.params;
-      const showTime = await Showtime.findByPk(id);
-      await Showtime.destroy({
-          where:{
-              id,
-          }
-      });
-      res.status(200).send(showTime);
+    const { id } = req.params;
+    const showTime = await Showtime.findByPk(id);
+    await Showtime.destroy({
+      where: {
+        id,
+      },
+    });
+    res.status(200).send(showTime);
   } catch (error) {
-      res.status(500).send(error);
+    res.status(500).send(error);
   }
-}
+};
 module.exports = {
-  getListShowTimesMovies,
+  getListShowTimesFollowMovieAndCinema,
   getAllListShowTime,
   getDetailsShowTime,
   createShowTime,
   updateShowTime,
-  deleteShowtime
+  deleteShowtime,
 };

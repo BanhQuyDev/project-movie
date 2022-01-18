@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { getAllMovie, getDetailsMovies, createMovie, deleteMovie, updateMovie, listMovieScreenings } = require("../controllers/movies.controller");
+const { checkDuplicate } = require("../middlewares/validations/check-duplicate-middleware");
 const { checkExist } = require("../middlewares/validations/check-exist-middleware");
 const {Movie}=require("../models");
 const moviesRouter = Router();
@@ -8,7 +9,7 @@ moviesRouter.get("/",getAllMovie);
 //http://localhost:7000/api/v1/movies/id
 moviesRouter.get("/:id",[checkExist(Movie)],getDetailsMovies);
 //http://localhost:7000/api/v1/movies
-moviesRouter.post("/",createMovie);
+moviesRouter.post("/",checkDuplicate(Movie),createMovie);
 //http://localhost:7000/api/v1/movies/id
 moviesRouter.put("/:id",[checkExist(Movie)],updateMovie)
 //http://localhost:7000/api/v1/movies/id

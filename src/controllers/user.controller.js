@@ -41,7 +41,7 @@ const findDetailUser = async (req, res) => {
  */
 const createUser = async (req, res) => {
   try {
-    const { name, email, password, phone, role } = req.body;
+    const { id,name, email, password, phone, role } = req.body;
     //c1
     // const newUser = User.build({name, email, password, phone, role});
     // await newUser.save();
@@ -49,6 +49,7 @@ const createUser = async (req, res) => {
     const salt = bycryptjs.genSaltSync(10);
     const hashPassword = bycryptjs.hashSync(password, salt);
     const newUser = await User.create({
+      id,
       name,
       email,
       password: hashPassword,
