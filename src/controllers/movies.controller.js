@@ -1,5 +1,5 @@
 const { Movie } = require("../models");
-
+const { Op } = require("sequelize");
 const getAllMovie = async (req, res) => {
   try {
     const movieList = await Movie.findAll({
@@ -83,11 +83,12 @@ const deleteMovie = async (req, res) => {
 };
 
 //danh sách những phim sắp chiếu , đang chiếu và xuất chiều đặc biệt
-const listMovieScreenings =(status) => async (req, res) => {
+const listMovieScreenings = async (req, res) => {
   try {
+    const today = new Date();
     const list = await Movie.findAll({
       where: {
-        status,
+        comingDate:{[Op.lte]:today }
       },
     });
     res.status(200).send(list);
@@ -95,6 +96,31 @@ const listMovieScreenings =(status) => async (req, res) => {
     res.status(500).send(error);
   }
 };
+const listUpComingMovie = async (req, res) => {
+  try {
+    const today = new Date();
+    const list = await Movie.findAll({
+      where: {
+        comingDate:{[Op.gt]:today }
+      },
+    });
+    res.status(200).send(list);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+const listSpecialScreeningMovie = async (req, res) => {
+  try {
+    const list = await Movie.findAll({
+      where:{
+        status:{[Op.like]:'special'}
+      }
+    })
+    res.status(200).send(list)
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
 module.exports = {
   getAllMovie,
   getDetailsMovies,
@@ -102,4 +128,6 @@ module.exports = {
   deleteMovie,
   updateMovie,
   listMovieScreenings,
+  listUpComingMovie,
+  listSpecialScreeningMovie
 };
