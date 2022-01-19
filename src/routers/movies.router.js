@@ -14,13 +14,11 @@ moviesRouter.post("/",checkDuplicate(Movie),createMovie);
 moviesRouter.put("/:id",[checkExist(Movie)],updateMovie)
 //http://localhost:7000/api/v1/movies/id
 moviesRouter.delete("/:id",[checkExist(Movie)],deleteMovie);
-//http://localhost:7000/api/v1/movies/status/moviescreening (status:1 là đang chiếu)
+//http://localhost:7000/api/v1/movies/status/moviescreening
 moviesRouter.get("/status/moviescreening",listMovieScreenings);
 //http://localhost:7000/api/v1/movies/status/upcomingmovie
-//(upcoming movie status:2)
 moviesRouter.get("/status/upcomingmovie",listUpComingMovie);
 //http://localhost:7000/api/v1/movies/status/specialscreeningmovie
-//(upcoming movie status:3)
 moviesRouter.get("/status/specialscreeningmovie",listSpecialScreeningMovie);
 
 module.exports = {
